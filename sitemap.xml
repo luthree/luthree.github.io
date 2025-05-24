@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.luthr.ee/posts/A-name-picker-based-on-Python/</loc>
+    
+    <lastmod>2025-05-24T08:58:05.469Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.luthr.ee/posts/hello-world/</loc>
     
-    <lastmod>2025-05-23T17:36:03.631Z</lastmod>
+    <lastmod>2025-05-24T08:01:49.812Z</lastmod>
     
   </url>
   

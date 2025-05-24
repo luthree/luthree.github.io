@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  
+    <link rel="icon" href="/assets/favicon.png">
+  
+  
+  <title>基于Python的图形化点名系统 | luthree&#39;s Blog</title>
+  <link rel="canonical" href="https://blog.luthr.ee/posts/A-name-picker-based-on-Python/">
+  <meta name="author" content="luthree" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="Python, 工具" />
+  
+  <meta name="description" content="一、要实现的功能 随机点名 在一定数量范围内不会重复点到同一个人 便于操作的图形化界面 修改指定名字被点到的概率  二、功能的实现1. 库的导入使用tklinker和random库可以帮助我们实现图形化界面和随机点名： import tkinter as tk import random  2. 搭建图形界面用以下的代码可以搭建一个简单的点名页面： def __init__(self, maste">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于Python的图形化点名系统">
+<meta property="og:url" content="https://blog.luthr.ee/posts/A-name-picker-based-on-Python/index.html">
+<meta property="og:site_name" content="luthree&#39;s Blog">
+<meta property="og:description" content="一、要实现的功能 随机点名 在一定数量范围内不会重复点到同一个人 便于操作的图形化界面 修改指定名字被点到的概率  二、功能的实现1. 库的导入使用tklinker和random库可以帮助我们实现图形化界面和随机点名： import tkinter as tk import random  2. 搭建图形界面用以下的代码可以搭建一个简单的点名页面： def __init__(self, maste">
+<meta property="og:locale">
+<meta property="article:published_time" content="2025-05-24T07:39:36.000Z">
+<meta property="article:modified_time" content="2025-05-24T08:58:05.469Z">
+<meta property="article:author" content="luthree">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="工具">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="luthree's Blog" type="application/atom+xml">
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kr-core.min.css" media="all"></link>
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/highlight.js/atom-dark.min.css" media="all"></link>
+  
+  <link rel="stylesheet" id="theme-light-css" href="/css/kr-theme/light.min.css" media="all"></link>
+  <link rel="stylesheet" id="theme-dark-css" href="/css/kr-theme/dark.min.css" media="(prefers-color-scheme: dark)"></link>
+  <script src="/js/kr-theme.min.js"></script>
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></link>
+  
+    <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></link>
+  
+  
+    <link rel="stylesheet" href="/vendors/viewerjs@1.11.6/dist/viewer.min.css"></link>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  
+  <!-- 自定义站点横幅和背景 -->
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/assets/banner.jpg');
+      }
+      html[data-theme="dark"] .kratos-cover.kratos-cover-2 {
+        background-image: url('/assets/banner.jpg');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/assets/bg.png');
+        }
+        html[data-theme="dark"] body.custom-background {
+          background-image: url('/assets/bg.png');
+        }
+      }
+    
+    
+      .widget-kratos-about .photo-background {
+        background-image: url('/images/default.webp');
+      }
+      html[data-theme="dark"] .widget-kratos-about .photo-background {
+        background-image: url('/images/default.webp');
+      }
+    
+  </style>
+
+  <!-- 额外的追加注入项 -->
+  
+    <link rel="stylesheet" href="/others/mobile-hero.css" />
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    <li>
+                                        
+                                            <a href="/">
+                                        
+                                            
+                                                <i class="fa fa-home"></i>
+                                            
+                                            首页
+                                        </a>
+                                        
+                                    </li>
+                                
+                                    <li>
+                                        
+                                            <a href="/archives/">
+                                        
+                                            
+                                                <i class="fa fa-file"></i>
+                                            
+                                            档案馆
+                                        </a>
+                                        
+                                    </li>
+                                
+                                    <li>
+                                        
+                                            <a>
+                                        
+                                            
+                                                <i class="fa fa-link"></i>
+                                            
+                                            链接
+                                        </a>
+                                        
+                                            <ul class="sub-menu">
+                                                
+                                                    <li>
+                                                        <a target="_blank" rel="noopener" href="https://github.com/luthree">
+                                                            
+                                                                <i class="fa fa-code"></i>
+                                                            
+                                                            代码仓库
+                                                        </a>
+                                                    </li>
+                                                
+                                            </ul>
+                                        
+                                    </li>
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">luthree&#39;s Blog</a></div>
+                    <div id="kratos-nav-toggle-wrapper" class="nav-toggle">
+                        <a id="kratos-nav-toggle" class="kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>luthree&#39;s Blog</h2> <br />
+                        <span> </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+
+
+        
+
+            
+
+            <section class="kr-main-col col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://blog.luthr.ee/posts/A-name-picker-based-on-Python/">
+    <div class="kratos-hentry kratos-page-inner clearfix">
+        <header class="kratos-page-header">
+            
+                <h1 class="kratos-page-title text-center" itemprop="name headline">基于Python的图形化点名系统</h1>
+            
+            <ul class="kratos-page-meta text-center">
+                <li><time datetime="2025-05-24T07:39:36.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2025-05-24</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">luthree</span>
+                </li>
+                
+                    <li>
+                        <i class="fa fa-edit"></i> 
+                        
+                        
+                            ~5.57K
+                        
+                        字
+                    </li>
+                
+                
+                
+            </ul>
+        </header>
+        <div class="kratos-page-content kr-post">
+            
+            
+            
+                <div class="kratos-post-inner-toc toc-div-class" >
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%A6%81%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="toc-number">1.</span> <span class="toc-text">一、要实现的功能</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%8A%9F%E8%83%BD%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.</span> <span class="toc-text">二、功能的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%BA%93%E7%9A%84%E5%AF%BC%E5%85%A5"><span class="toc-number">2.1.</span> <span class="toc-text">1. 库的导入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%90%AD%E5%BB%BA%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2"><span class="toc-number">2.2.</span> <span class="toc-text">2. 搭建图形界面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E8%8E%B7%E5%8F%96%E5%90%8D%E5%8D%95"><span class="toc-number">2.3.</span> <span class="toc-text">3. 获取名单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E9%9A%8F%E6%9C%BA%E7%82%B9%E5%90%8D"><span class="toc-number">2.4.</span> <span class="toc-text">4. 随机点名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%8E%92%E9%99%A4%E7%82%B9%E8%BF%87%E7%9A%84%E5%90%8D%E5%AD%97"><span class="toc-number">2.5.</span> <span class="toc-text">5. 排除点过的名字</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%B0%86%E7%82%B9%E5%90%8D%E7%BB%93%E6%9E%9C%E6%98%BE%E7%A4%BA%E5%9C%A8%E5%B1%8F%E5%B9%95%E4%B8%8A"><span class="toc-number">2.6.</span> <span class="toc-text">6. 将点名结果显示在屏幕上</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E7%82%B9%E5%90%8D%E6%97%B6%E5%AE%9E%E7%8E%B0%E6%BB%9A%E5%8A%A8%E5%8A%A8%E7%94%BB"><span class="toc-number">2.7.</span> <span class="toc-text">7. 点名时实现滚动动画</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E5%AE%9E%E7%8E%B0%E9%9A%90%E8%97%8F%E5%8A%9F%E8%83%BD"><span class="toc-number">2.8.</span> <span class="toc-text">8. 实现隐藏功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E6%88%90%E5%93%81"><span class="toc-number">2.9.</span> <span class="toc-text">9. 成品</span></a></li></ol></li></ol>
+                </div>
+            
+            <hr />
+            <div itemprop="articleBody"><h1 id="一、要实现的功能"><a href="#一、要实现的功能" class="headerlink" title="一、要实现的功能"></a>一、要实现的功能</h1><ul>
+<li>随机点名</li>
+<li>在一定数量范围内不会重复点到同一个人</li>
+<li>便于操作的图形化界面</li>
+<li><span class="blur">修改指定名字被点到的概率</span></li>
+</ul>
+<h1 id="二、功能的实现"><a href="#二、功能的实现" class="headerlink" title="二、功能的实现"></a>二、功能的实现</h1><h2 id="1-库的导入"><a href="#1-库的导入" class="headerlink" title="1. 库的导入"></a>1. 库的导入</h2><p>使用<code>tklinker</code>和<code>random</code>库可以帮助我们实现图形化界面和随机点名：</p>
+<pre><code>import tkinter as tk
+import random
+</code></pre>
+<h2 id="2-搭建图形界面"><a href="#2-搭建图形界面" class="headerlink" title="2. 搭建图形界面"></a>2. 搭建图形界面</h2><p>用以下的代码可以搭建一个简单的点名页面：</p>
+<pre><code>def __init__(self, master):
+    self.master = master
+    
+    master.title(&quot;点名器&quot;)
+
+    self.label = tk.Label(master, text=&quot;     点名结果:      &quot;, font=(&quot;宋体&quot;, 30))
+    self.label.pack(pady=20)
+
+    self.result = tk.Label(master, text=&quot;&quot;, font=(&quot;宋体&quot;, 34), fg=&quot;red&quot;)
+    self.result.pack(pady=20)
+
+    self.pick_button = tk.Button(master, text=&quot;开始点名&quot;, command=self.toggle_picking, font=(&quot;宋体&quot;, 28))
+    self.pick_button.pack(pady=20)
+</code></pre>
+<p>其中：</p>
+<ul>
+<li><code>self.result</code>为显示点名结果的标签。</li>
+<li><code>self.pick_button</code>为开始&#x2F;结束按钮。</li>
+</ul>
+<h2 id="3-获取名单"><a href="#3-获取名单" class="headerlink" title="3. 获取名单"></a>3. 获取名单</h2><p>为实现随机点名，我们必须要做的是获取所有人的姓名，其可以用以下代码实现：</p>
+<pre><code>with open(&quot;names.txt&quot;, &quot;r&quot;, encoding=&quot;utf-8&quot;) as tf:
+        self.names = tf.read().split(&quot;\n&quot;)
+</code></pre>
+<p>其中：</p>
+<ul>
+<li>文件<code>names.txt</code>是储存名单的文件。</li>
+<li>列表<code>self.names</code>用于在程序中储存名单。</li>
+<li>函数<code>tf.read().split(&quot;\n&quot;)</code>用于按照换行分割名字</li>
+</ul>
+<p>引号中的文件名在没有路径修饰的情况下会默认读取与程序同目录下的文件。我们也可以将其改成绝对路径：</p>
+<pre><code>with open(&quot;C://names.txt&quot;, &quot;r&quot;, encoding=&quot;utf-8&quot;) as tf:
+</code></pre>
+<h2 id="4-随机点名"><a href="#4-随机点名" class="headerlink" title="4. 随机点名"></a>4. 随机点名</h2><p>要实现随机点名，我们需要调用<code>random</code>下的<code>choice</code>来在列表中选择：</p>
+<pre><code>def choose_name(self):
+    final_name = random.choice(names)
+    return final_name
+</code></pre>
+<h2 id="5-排除点过的名字"><a href="#5-排除点过的名字" class="headerlink" title="5. 排除点过的名字"></a>5. 排除点过的名字</h2><p>我们不会希望一个人因为运气好而被连续点到，因此需要在点到一个人后将他的名字排除在外。</p>
+<p>我们先定义一个列表用于储存已经点过的名字：</p>
+<pre><code>self.named = []
+</code></pre>
+<p>然后将列表中的名字排除：</p>
+<pre><code>def choose_name(self):
+    # 过滤出有效的名字列表，排除已经点过的名字
+    available_names = [name for name in self.names if name not in self.named]
+
+    # 如果没有可选名字，则直接返回 &quot;无可选名字&quot;
+    if not available_names:
+        return &quot;无可选名字，请重启应用后重试&quot;
+</code></pre>
+<h2 id="6-将点名结果显示在屏幕上"><a href="#6-将点名结果显示在屏幕上" class="headerlink" title="6. 将点名结果显示在屏幕上"></a>6. 将点名结果显示在屏幕上</h2><p>将点名结果<code>final_name</code>显示在结果标签中，然后将其记录在<code>self.named</code>中：</p>
+<pre><code>def pick_final_name(self):
+    self.count += 1  # 点名次数增加
+
+    final_name = self.choose_name()
+
+    # 显示最终点名结果
+    self.result.config(text=final_name)
+
+    # 如果记录的名字超过20次，移除最早的名字
+    if self.count &gt;= 20:
+        self.named.pop(0)
+    self.named.append(final_name)
+</code></pre>
+<h2 id="7-点名时实现滚动动画"><a href="#7-点名时实现滚动动画" class="headerlink" title="7. 点名时实现滚动动画"></a>7. 点名时实现滚动动画</h2><p>为营造点名的紧张感，我们可以用以下代码来实现名字在屏幕上滚动的效果：</p>
+<pre><code>def roll_names(self):
+    if self.is_picking:
+        name = random.choice(self.names)
+        self.result.config(text=name)
+        self.master.after(25, self.roll_names)
+</code></pre>
+<p>其中：<code>self.is_picking</code>记录了点名器的状态，其可以用先前定义的按钮来控制：</p>
+<pre><code>def toggle_picking(self):
+    self.is_picking = False
+    if not self.is_picking:
+        self.is_picking = True
+        self.pick_button.config(text=&quot;停止点名&quot;)
+        self.roll_names()
+    else:
+        self.is_picking = False
+        self.pick_button.config(text=&quot;开始点名&quot;)
+        self.pick_final_name()
+</code></pre>
+<h2 id="8-实现隐藏功能"><a href="#8-实现隐藏功能" class="headerlink" title="8. 实现隐藏功能"></a>8. 实现隐藏功能</h2><div class="collapse-box-control">
+    <div class="collapse-box-header"><div class="collapse-box-icon"><i class="fa fa-plus"></i></div><span>隐藏的内容</span></div>
+    <div class="collapse-box-content"><div class="inner">
+        <p>在此基础上我们可以实现修改指定名字被点到的概率。首先定义一个列表用于储存特殊的名字：</p>
+<pre><code>self.skip_names = [&quot;张三&quot;]
+</code></pre>
+<p>然后修改他被点到的概率：</p>
+<pre><code>if self.skip_names in available_names and random.random() &lt; 0.5:
+    available_names.remove(self.skip_names)
+</code></pre>
+<p>其中：<code>random.random() &lt; 0.5</code>代表其被点到后有50%的概率被跳过。</p>
+ 
+    </div></div>
+    </div>
+
+<h2 id="9-成品"><a href="#9-成品" class="headerlink" title="9. 成品"></a>9. 成品</h2><div class="collapse-box-control">
+    <div class="collapse-box-header"><div class="collapse-box-icon"><i class="fa fa-plus"></i></div><span>完整代码</span></div>
+    <div class="collapse-box-content"><div class="inner">
+        <p>import tkinter as tk<br>import random</p>
+<p>class NamePicker:<br>    def <strong>init</strong>(self, master):<br>        self.master &#x3D; master</p>
+<pre><code>    self.count = 0  # 初始化计数器
+    
+    master.title(&quot;点名器&quot;)
+
+    self.label = tk.Label(master, text=&quot;     点名结果:      &quot;, font=(&quot;宋体&quot;, 30))
+    self.label.pack(pady=20)
+
+    self.result = tk.Label(master, text=&quot;&quot;, font=(&quot;宋体&quot;, 34), fg=&quot;red&quot;)
+    self.result.pack(pady=20)
+
+    self.pick_button = tk.Button(master, text=&quot;开始点名&quot;, command=self.toggle_picking, font=(&quot;宋体&quot;, 28))
+    self.pick_button.pack(pady=20)
+
+    # 读取名字列表
+    with open(&quot;names.txt&quot;, &quot;r&quot;, encoding=&quot;utf-8&quot;) as tf:
+        self.names = tf.read().split(&quot;\n&quot;)
+        
+    # 跳过的名字列表
+    self.skip_names = [&quot;张三&quot;]
+
+    # 记录已经点过名的名单
+    self.named = []
+
+    self.is_picking = False
+
+def toggle_picking(self):
+    if not self.is_picking:
+        self.is_picking = True
+        self.pick_button.config(text=&quot;停止点名&quot;)
+        self.roll_names()
+    else:
+        self.is_picking = False
+        self.pick_button.config(text=&quot;开始点名&quot;)
+        self.pick_final_name()
+
+def roll_names(self):
+    if self.is_picking:
+        name = random.choice(self.names)
+        self.result.config(text=name)
+        self.master.after(25, self.roll_names)
+
+def pick_final_name(self):
+    self.count += 1  # 点名次数增加
+
+    final_name = self.choose_name()
+
+    # 显示最终点名结果
+    self.result.config(text=final_name)
+
+    # 如果记录的名字超过20次，移除最早的名字
+    if self.count &gt;= 20:
+        self.named.pop(0)
+    self.named.append(final_name)
+
+def choose_name(self):
+    # 限制最大重试次数，防止死循环
+    max_attempts = 100  
+    attempts = 0
+
+    while attempts &lt; max_attempts:
+        attempts += 1
+
+        # 过滤出有效的名字列表，排除跳过名单和已经点过的名字
+        available_names = [name for name in self.names if name not in self.named]
+        # 如果点名次数 &lt;= 10，跳过 `skip_names` 中的所有名字
+        if self.count &lt;= 10:
+            available_names = [name for name in available_names if name not in self.skip_names]
+        # 如果点名次数 &gt; 10，只对第一个名字 50% 概率跳过
+        elif self.count &gt; 10 and self.skip_names[0] in available_names and random.random() &lt; 0.5:
+            available_names.remove(self.skip_names[0])
+
+        # 如果没有可选名字，则直接返回 &quot;无可选名字&quot;
+        if not available_names:
+            return &quot;无可选名字，请重启应用后重试&quot;
+
+        final_name = random.choice(available_names)
+
+        # 如果选中的名字不在最近20次内，则返回这个名字
+        if final_name not in self.named:
+            return final_name
+
+    # 如果达到最大尝试次数，返回最后选中的名字以避免死循环
+    return final_name
+</code></pre>
+<p>if <strong>name</strong> &#x3D;&#x3D; “<strong>main</strong>“:<br>    root &#x3D; tk.Tk()<br>    app &#x3D; NamePicker(root)<br>    root.mainloop()</p>
+ 
+    </div></div>
+    </div></div>
+        </div>
+        
+            <div class="kratos-copyright text-center clearfix">
+                <span itemprop="copyrightNotice">本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</span>
+            </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/Python/" rel="tag">Python</a>, <a class="tag-none-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-05-24T08:58:05.469Z" itemprop="dateModified">最后编辑：2025-05-24</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" 你好，世界！" href="/posts/hello-world/"><i class="fa fa-angle-left"></i> 上一篇</a>
+            </div>
+            
+            
+        </nav>
+    
+    
+        <div class="comment-post">
+            
+        </div>
+    
+</article>
+
+        
+
+            </section>
+
+            
+                
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/user.svg" alt="luthree" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center"> </p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                2
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                2
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                3
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix toc-div-class" >
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar" role="progressbar" aria-label="阅读进度："></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%A6%81%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="toc-text">一、要实现的功能</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%8A%9F%E8%83%BD%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">二、功能的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%BA%93%E7%9A%84%E5%AF%BC%E5%85%A5"><span class="toc-text">1. 库的导入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%90%AD%E5%BB%BA%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2"><span class="toc-text">2. 搭建图形界面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E8%8E%B7%E5%8F%96%E5%90%8D%E5%8D%95"><span class="toc-text">3. 获取名单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E9%9A%8F%E6%9C%BA%E7%82%B9%E5%90%8D"><span class="toc-text">4. 随机点名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%8E%92%E9%99%A4%E7%82%B9%E8%BF%87%E7%9A%84%E5%90%8D%E5%AD%97"><span class="toc-text">5. 排除点过的名字</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%B0%86%E7%82%B9%E5%90%8D%E7%BB%93%E6%9E%9C%E6%98%BE%E7%A4%BA%E5%9C%A8%E5%B1%8F%E5%B9%95%E4%B8%8A"><span class="toc-text">6. 将点名结果显示在屏幕上</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E7%82%B9%E5%90%8D%E6%97%B6%E5%AE%9E%E7%8E%B0%E6%BB%9A%E5%8A%A8%E5%8A%A8%E7%94%BB"><span class="toc-text">7. 点名时实现滚动动画</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E5%AE%9E%E7%8E%B0%E9%9A%90%E8%97%8F%E5%8A%9F%E8%83%BD"><span class="toc-text">8. 实现隐藏功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E6%88%90%E5%93%81"><span class="toc-text">9. 成品</span></a></li></ol></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类列表</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%A7%8B/">开始</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/Python/" style="font-size: 0.6em;">Python</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 0.6em;">工具</a> <a href="/tags/%E6%AC%A2%E8%BF%8E/" style="font-size: 0.6em;">欢迎</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/posts/A-name-picker-based-on-Python/"><i class="fa fa-book"></i> 基于Python的图形化点名系统</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/posts/hello-world/"><i class="fa fa-book"></i> 你好，世界！</a>
+            
+          
+        
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+            
+
+        
+
+                </div>
+    </div>
+</div>
+
+<footer>
+    <div id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                            <li>
+                                <a href="mailto:luthree@luthr.ee" target="_blank" rel="nofollow">
+                                    <i class="fa fa-envelope"></i>
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a href="https://github.com/luthree" target="_blank" rel="nofollow">
+                                    <i class="fa fa-github"></i>
+                                </a>
+                            </li>
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 luthree's Blog 版权所有.</li>
+                            <li>本站已在风雨中飘摇<span id="kr-since">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with <i class="fa fa-heart" style="color:#d43f57"></i> by <a href="https://github.com/luthree" target="_blank">luthree</a></li>
+                        </div>
+                        <!-- 额外的追加注入项 -->
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                <div class="box theme-box" id="theme-toggle">
+                    <span class="fa fa-adjust"></span>
+                </div>
+            </div>
+            <div id="gotop-box" class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+
+
+
+
+<!-- 额外的追加注入项 -->
+
+
+        <script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+  <script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+
+
+
+  <script defer src="/vendors/viewerjs@1.11.6/dist/viewer.min.js"></script>
+
+
+<script defer src="/js/kr-core.min.js"></script>
+
+
+  <script defer src="/js/kr-pjax.min.js"></script>
+
+
+<!-- 额外的追加注入项 -->
+
+  <script src="/effects/cursor-effects.js"></script>
+
+
+
+    </body>
+</html>
