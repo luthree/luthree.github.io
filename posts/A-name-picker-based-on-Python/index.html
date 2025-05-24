@@ -27,7 +27,7 @@
 <meta property="og:description" content="一、要实现的功能 随机点名 在一定数量范围内不会重复点到同一个人 便于操作的图形化界面 修改指定名字被点到的概率  二、功能的实现1. 库的导入使用tklinker和random库可以帮助我们实现图形化界面和随机点名：     import tkinter as tk     import random  2. 搭建图形界面用以下的代码可以搭建一个简单的点名页面：     def __init__">
 <meta property="og:locale">
 <meta property="article:published_time" content="2025-05-24T07:39:36.000Z">
-<meta property="article:modified_time" content="2025-05-24T09:02:15.536Z">
+<meta property="article:modified_time" content="2025-05-24T09:03:36.084Z">
 <meta property="article:author" content="luthree">
 <meta property="article:tag" content="Python">
 <meta property="article:tag" content="工具">
@@ -206,7 +206,7 @@
                         <i class="fa fa-edit"></i> 
                         
                         
-                            ~5.78K
+                            ~6.30K
                         
                         字
                     </li>
@@ -333,99 +333,103 @@
     </div></div>
     </div>
 
-<h2 id="9-成品"><a href="#9-成品" class="headerlink" title="9. 成品"></a>9. 成品</h2><div class="collapse-box-control">
-    <div class="collapse-box-header"><div class="collapse-box-icon"><i class="fa fa-plus"></i></div><span>完整代码</span></div>
-    <div class="collapse-box-content"><div class="inner">
-        <p>import tkinter as tk<br>import random</p>
-<p>class NamePicker:<br>    def <strong>init</strong>(self, master):<br>        self.master &#x3D; master</p>
-<pre><code>    self.count = 0  # 初始化计数器
-    
-    master.title(&quot;点名器&quot;)
+<h2 id="9-成品"><a href="#9-成品" class="headerlink" title="9. 成品"></a>9. 成品</h2><pre><code>    import tkinter as tk
+    import random
 
-    self.label = tk.Label(master, text=&quot;     点名结果:      &quot;, font=(&quot;宋体&quot;, 30))
-    self.label.pack(pady=20)
+    class NamePicker:
+        def __init__(self, master):
+            self.master = master
 
-    self.result = tk.Label(master, text=&quot;&quot;, font=(&quot;宋体&quot;, 34), fg=&quot;red&quot;)
-    self.result.pack(pady=20)
+            self.count = 0  # 初始化计数器
+            
+            master.title(&quot;点名器&quot;)
 
-    self.pick_button = tk.Button(master, text=&quot;开始点名&quot;, command=self.toggle_picking, font=(&quot;宋体&quot;, 28))
-    self.pick_button.pack(pady=20)
+            self.label = tk.Label(master, text=&quot;     点名结果:      &quot;, font=(&quot;宋体&quot;, 30))
+            self.label.pack(pady=20)
 
-    # 读取名字列表
-    with open(&quot;names.txt&quot;, &quot;r&quot;, encoding=&quot;utf-8&quot;) as tf:
-        self.names = tf.read().split(&quot;\n&quot;)
-        
-    # 跳过的名字列表
-    self.skip_names = [&quot;张三&quot;]
+            self.result = tk.Label(master, text=&quot;&quot;, font=(&quot;宋体&quot;, 34), fg=&quot;red&quot;)
+            self.result.pack(pady=20)
 
-    # 记录已经点过名的名单
-    self.named = []
+            self.pick_button = tk.Button(master, text=&quot;开始点名&quot;, command=self.toggle_picking, font=(&quot;宋体&quot;, 28))
+            self.pick_button.pack(pady=20)
 
-    self.is_picking = False
+            # 读取名字列表
+            with open(&quot;names.txt&quot;, &quot;r&quot;, encoding=&quot;utf-8&quot;) as tf:
+                self.names = tf.read().split(&quot;\n&quot;)
+                
+            # 跳过的名字列表
+            self.skip_names = [&quot;张三&quot;]
 
-def toggle_picking(self):
-    if not self.is_picking:
-        self.is_picking = True
-        self.pick_button.config(text=&quot;停止点名&quot;)
-        self.roll_names()
-    else:
-        self.is_picking = False
-        self.pick_button.config(text=&quot;开始点名&quot;)
-        self.pick_final_name()
+            # 记录已经点过名的名单
+            self.named = []
 
-def roll_names(self):
-    if self.is_picking:
-        name = random.choice(self.names)
-        self.result.config(text=name)
-        self.master.after(25, self.roll_names)
+            self.is_picking = False
 
-def pick_final_name(self):
-    self.count += 1  # 点名次数增加
+        def toggle_picking(self):
+            if not self.is_picking:
+                self.is_picking = True
+                self.pick_button.config(text=&quot;停止点名&quot;)
+                self.roll_names()
+            else:
+                self.is_picking = False
+                self.pick_button.config(text=&quot;开始点名&quot;)
+                self.pick_final_name()
 
-    final_name = self.choose_name()
+        def roll_names(self):
+            if self.is_picking:
+                name = random.choice(self.names)
+                self.result.config(text=name)
+                self.master.after(25, self.roll_names)
 
-    # 显示最终点名结果
-    self.result.config(text=final_name)
+        def pick_final_name(self):
+            self.count += 1  # 点名次数增加
 
-    # 如果记录的名字超过20次，移除最早的名字
-    if self.count &gt;= 20:
-        self.named.pop(0)
-    self.named.append(final_name)
+            final_name = self.choose_name()
 
-def choose_name(self):
-    # 限制最大重试次数，防止死循环
-    max_attempts = 100  
-    attempts = 0
+            # 显示最终点名结果
+            self.result.config(text=final_name)
 
-    while attempts &lt; max_attempts:
-        attempts += 1
+            # 如果记录的名字超过20次，移除最早的名字
+            if self.count &gt;= 20:
+                self.named.pop(0)
+            self.named.append(final_name)
 
-        # 过滤出有效的名字列表，排除跳过名单和已经点过的名字
-        available_names = [name for name in self.names if name not in self.named]
-        # 如果点名次数 &lt;= 10，跳过 `skip_names` 中的所有名字
-        if self.count &lt;= 10:
-            available_names = [name for name in available_names if name not in self.skip_names]
-        # 如果点名次数 &gt; 10，只对第一个名字 50% 概率跳过
-        elif self.count &gt; 10 and self.skip_names[0] in available_names and random.random() &lt; 0.5:
-            available_names.remove(self.skip_names[0])
+        def choose_name(self):
+            # 限制最大重试次数，防止死循环
+            max_attempts = 100  
+            attempts = 0
 
-        # 如果没有可选名字，则直接返回 &quot;无可选名字&quot;
-        if not available_names:
-            return &quot;无可选名字，请重启应用后重试&quot;
+            while attempts &lt; max_attempts:
+                attempts += 1
 
-        final_name = random.choice(available_names)
+                # 过滤出有效的名字列表，排除跳过名单和已经点过的名字
+                available_names = [name for name in self.names if name not in self.named]
+                # 如果点名次数 &lt;= 10，跳过 `skip_names` 中的所有名字
+                if self.count &lt;= 10:
+                    available_names = [name for name in available_names if name not in self.skip_names]
+                # 如果点名次数 &gt; 10，只对第一个名字 50% 概率跳过
+                elif self.count &gt; 10 and self.skip_names[0] in available_names and random.random() &lt; 0.5:
+                    available_names.remove(self.skip_names[0])
 
-        # 如果选中的名字不在最近20次内，则返回这个名字
-        if final_name not in self.named:
+                # 如果没有可选名字，则直接返回 &quot;无可选名字&quot;
+                if not available_names:
+                    return &quot;无可选名字，请重启应用后重试&quot;
+
+                final_name = random.choice(available_names)
+
+                # 如果选中的名字不在最近20次内，则返回这个名字
+                if final_name not in self.named:
+                    return final_name
+
+            # 如果达到最大尝试次数，返回最后选中的名字以避免死循环
             return final_name
 
-    # 如果达到最大尝试次数，返回最后选中的名字以避免死循环
-    return final_name
+    if __name__ == &quot;__main__&quot;:
+        root = tk.Tk()
+        app = NamePicker(root)
+        root.mainloop()
 </code></pre>
-<p>if <strong>name</strong> &#x3D;&#x3D; “<strong>main</strong>“:<br>    root &#x3D; tk.Tk()<br>    app &#x3D; NamePicker(root)<br>    root.mainloop()</p>
- 
-    </div></div>
-    </div></div>
+</div>
         </div>
         
             <div class="kratos-copyright text-center clearfix">
@@ -442,7 +446,7 @@ def choose_name(self):
                     <a class="tag-none-link" href="/tags/Python/" rel="tag">Python</a>, <a class="tag-none-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a>
                 </div>
                 <div class="pull-date">
-                    <time datetime="2025-05-24T09:02:15.536Z" itemprop="dateModified">最后编辑：2025-05-24</time>
+                    <time datetime="2025-05-24T09:03:36.084Z" itemprop="dateModified">最后编辑：2025-05-24</time>
                 </div>
             </div>
         </footer>
