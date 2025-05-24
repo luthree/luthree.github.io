@@ -3,11 +3,11 @@
   <title>luthree&#39;s Blog</title>
   
   <subtitle> </subtitle>
-  <link href="https://luthr.ee/atom.xml" rel="self"/>
+  <link href="https://blog.luthr.ee/atom.xml" rel="self"/>
   
-  <link href="https://luthr.ee/"/>
+  <link href="https://blog.luthr.ee/"/>
   <updated>2025-05-23T17:36:03.631Z</updated>
-  <id>https://luthr.ee/</id>
+  <id>https://blog.luthr.ee/</id>
   
   <author>
     <name>luthree</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>你好，世界！</title>
-    <link href="https://luthr.ee/posts/hello-world/"/>
-    <id>https://luthr.ee/posts/hello-world/</id>
+    <link href="https://blog.luthr.ee/posts/hello-world/"/>
+    <id>https://blog.luthr.ee/posts/hello-world/</id>
     <published>2025-05-23T16:00:00.000Z</published>
     <updated>2025-05-23T17:36:03.631Z</updated>
     
@@ -34,10 +34,10 @@
     
     
     
-    <category term="开始" scheme="https://luthr.ee/categories/%E5%BC%80%E5%A7%8B/"/>
+    <category term="开始" scheme="https://blog.luthr.ee/categories/%E5%BC%80%E5%A7%8B/"/>
     
     
-    <category term="欢迎" scheme="https://luthr.ee/tags/%E6%AC%A2%E8%BF%8E/"/>
+    <category term="欢迎" scheme="https://blog.luthr.ee/tags/%E6%AC%A2%E8%BF%8E/"/>
     
   </entry>
   
